@@ -1,0 +1,7 @@
+numpy>=1.26
+scipy>=1.11
+scikit-learn>=1.4
+matplotlib>=3.8
+httpx>=0.27
+datasets>=2.20
+# GPU run only (installed by runpod.sh): vllm==0.6.6.post1
