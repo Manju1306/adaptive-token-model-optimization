@@ -1,0 +1,33 @@
+== A. Hindsight headroom from interventional profiles (train, 300 tasks, upper bound ignoring interactions) ==
+(tasks the reference solves: oracle picks the cheapest single-step config that keeps the task solved; others unchanged)
+  hotpotqa  oracle cost =  43.6% of reference; steps where S or M suffices =  62.8% (n=750)
+  all       oracle cost =  27.5% of reference; steps where S or M suffices =  79.0% (n=1500)
+  gsm8k     oracle cost =   8.8% of reference; steps where S or M suffices =  95.2% (n=750)
+  task-level hindsight (cheapest static config per task, train): cost = 31.9% of reference at the reference's success
+  KATMO at lambda* on train: cost = 84.2% of reference
+
+== B. Relative cost under different 32B:7B price ratios (allocations fixed; S=1.5B, M=7B priced by parameters) ==
+  ratio          KATMO          joint     model-only    budget-only   static L@128  static M@1024
+   1.50          91.0%          95.0%          96.5%          98.3%          82.0%          66.1%
+   2.00          89.3%          93.8%          95.3%          98.3%          82.0%          49.6%
+   3.00          87.7%          92.7%          94.1%          98.3%          82.0%          33.1%
+   4.57          86.5%          91.9%          93.2%          98.3%          82.0%          21.7%
+   8.00          85.6%          91.3%          92.5%          98.3%          82.0%          12.4%
+  16.00          84.9%          90.8%          92.1%          98.3%          82.0%           6.2%
+  check: recomputed baseline KATMO cost differs from logged by 0.027% (escalated steps sum tokens across attempts)
+
+== C. Knowledge-rule firing at lambda* (test, KATMO, share of steps per step type) ==
+  step     n       R1      R2      R3      R4      R5      R6  BUDGET
+  plan     300    0.0%  100.0%    0.0%    0.0%    0.0%    3.7%    0.0%
+  reason   300    0.0%    0.0%    0.0%    0.0%    0.0%    7.3%    0.0%
+  tool     300    0.0%    0.0%   50.0%   29.7%    0.0%    0.0%    0.0%
+  verify   300    0.0%    0.0%    0.0%    0.0%   97.7%    0.0%    0.0%
+  answer   300  100.0%    0.0%    0.0%    0.0%    0.0%    0.0%    0.0%
+
+== D. Best test success reachable at or below a cost budget (% of reference), per family (descriptive, test frontier) ==
+  budget     5%     10%     20%     30%     50%     80%     90%    100%
+  KATMO         nan    53.7    68.0    68.0    68.0    68.0    80.0    80.0
+  joint        46.0    50.7    68.7    68.7    68.7    68.7    68.7    80.3
+  model-only   48.3    52.7    68.0    68.0    68.0    68.0    68.0    80.7
+  budget-only   nan     nan     nan     nan     nan     nan    79.7    80.7
+  static (12)  48.3    48.3    71.3    72.7    72.7    72.7    79.0    80.7

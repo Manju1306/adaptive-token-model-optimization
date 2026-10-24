@@ -24,8 +24,16 @@ SEQ = ["#ffffff", "#cde2fb", "#9ec5f4", "#6da7ec", "#3987e5", "#256abf", "#184f9
 REFN = f"static:{K.cfg_name(K.REF)}"
 
 
+def _read_runs(res):
+    """Read results/runs.jsonl, or the compressed runs.jsonl.gz shipped in the repository."""
+    import gzip, os
+    p = f"{res}/runs.jsonl"
+    f = open(p) if os.path.exists(p) else gzip.open(p + ".gz", "rt")
+    with f:
+        return [json.loads(l) for l in f]
+
 def load(res):
-    rows = [json.loads(l) for l in open(f"{res}/runs.jsonl")]
+    rows = _read_runs(res)
     meta = json.load(open(f"{res}/meta.json"))
     return rows, meta
 

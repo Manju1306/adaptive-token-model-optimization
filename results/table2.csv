@@ -1,0 +1,10 @@
+Variant,Success (%) [95% CI],Cost (% of ref.),Output tokens/task,Escalated steps (%),p (success vs ref.),Note
+KATMO (full),"80.0 [75.7, 84.3]",86.5,386,2.2,0.804,lambda*=1e+06 x C_ref (selected on train)
+- without knowledge rules (R1-R6),"80.0 [75.7, 84.3]",84.4,381,0.0,0.791,ablation
+- without escalation (R6),"81.3 [77.0, 85.7]",83.7,367,0.0,0.791,ablation
+Rules + cheapest admissible (lambda=0),"45.0 [39.7, 50.7]",7.5,228,4.3,<0.001,no estimator trade-off
+"KATMO, task budget = 75% of ref. cost","73.0 [68.0, 78.0]",74.4,374,2.6,<0.001,budget sensitivity
+"KATMO, task budget = 50% of ref. cost","68.0 [63.0, 73.0]",56.1,356,2.8,<0.001,budget sensitivity
+"KATMO, input-token weight w_in=0.1","80.0 [75.7, 84.3]",86.1,386,2.2,0.804,price sensitivity
+"KATMO, input-token weight w_in=0.5","80.0 [75.7, 84.3]",86.8,386,2.2,0.804,price sensitivity
+"KATMO, input-token weight w_in=1.0","80.0 [75.7, 84.3]",87.1,386,2.2,0.804,price sensitivity

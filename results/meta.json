@@ -1,0 +1,74 @@
+{
+  "mock": false,
+  "n_train_per_dataset": 150,
+  "n_test_per_dataset": 150,
+  "seed": 2026,
+  "models": {
+    "S": [
+      "Qwen/Qwen2.5-1.5B-Instruct",
+      1.5,
+      8011
+    ],
+    "M": [
+      "Qwen/Qwen2.5-7B-Instruct",
+      7.0,
+      8002
+    ],
+    "L": [
+      "Qwen/Qwen2.5-32B-Instruct-AWQ",
+      32.0,
+      8003
+    ]
+  },
+  "budgets": [
+    128,
+    256,
+    512,
+    1024
+  ],
+  "ref": "L@1024",
+  "w_in": 0.25,
+  "lams": [
+    0.0,
+    0.05,
+    0.1,
+    0.2,
+    0.4,
+    0.8,
+    1.6,
+    1000000.0
+  ],
+  "c_ref": 28.737226666666672,
+  "target": 0.79,
+  "tolerance": 0.01,
+  "lambda_star": {
+    "katmo": 1000000.0,
+    "route-model": 1000000.0,
+    "route-budget": 1000000.0,
+    "route-joint": 1000000.0
+  },
+  "estimator": {
+    "step_auc": 0.7277477856151459,
+    "step_brier": 0.19427691494423743,
+    "n_rows": 18000,
+    "ratio": {
+      "gsm8k": 3.8189308853445474,
+      "hotpotqa": 4.059662931174493
+    }
+  },
+  "rules": {
+    "R1": "ANSWER steps only format a committed answer: token budget <= 256.",
+    "R2": "PLAN steps are outlines: token budget <= 512.",
+    "R3": "Program-writing TOOL steps need room for code: token budget >= 256.",
+    "R4": "Long-context steps (estimated input > 1500 tokens) exclude the smallest tier S.",
+    "R5": "A VERIFY step must not use a weaker tier than the REASON step it checks.",
+    "R6": "Escalate once on structural failure: truncated -> double budget, otherwise next tier."
+  },
+  "gpu": "NVIDIA H200",
+  "vllm": "0.6.6.post1",
+  "python": "3.12.3",
+  "llm_calls": 138913,
+  "cache_hits": 43760,
+  "unique_generations": 74240,
+  "wall_seconds": 5420.178721666336
+}
